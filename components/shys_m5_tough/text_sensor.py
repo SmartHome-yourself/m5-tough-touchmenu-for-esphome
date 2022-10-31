@@ -1,6 +1,6 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-#import voluptuous as vol
+# import voluptuous as vol
 from esphome.components import text_sensor
 from esphome.const import CONF_ID, CONF_NAME
 
@@ -25,13 +25,18 @@ CONF_BUTTON_WIDTH = "width"
 CONF_BUTTON_HEIGHT = "height"
 CONF_BUTTON_FONTSIZE = "fontsize"
 CONF_BUTTON_TEXT = "text"
+CONF_BUTTON_COLOR = "color"
+CONF_BUTTON_TEXT_COLOR = "textcolor"
+CONF_BUTTON_BG_COLOR = "bgcolor"
 
 
 # DEFAULTS
 DEFAULT_NAME = "M5 Stack Tough"
 DEFAULT_INIT_SOUND = False
 DEFAULT_LOGIN_ENABLED = True
-
+DEFAULT_BUTTON_COLOR = "TFT_BLUE"
+DEFAULT_BUTTON_TEXT_COLOR = "TFT_WHITE"
+DEFAULT_BUTTON_BG_COLOR = "TFT_DARKGREY"
 
 empty_text_sensor_ns = cg.esphome_ns.namespace(
     'shys_m5_tough')
@@ -43,13 +48,17 @@ CONFIG_SCHEMA = text_sensor.TEXT_SENSOR_SCHEMA.extend({
     cv.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
     cv.Optional(CONF_INIT_SOUND, default=DEFAULT_INIT_SOUND): cv.boolean,
     cv.Optional(CONF_LOGIN_ENABLED, default=DEFAULT_LOGIN_ENABLED): cv.boolean,
-    cv.Optional(CONF_BUTTONS, default=dict): cv.All([dict({
-        cv.Required("x"): cv.int_range(0, 240),
-        cv.Required("y"): cv.int_range(0, 320),
-        cv.Required("width"): cv.int_range(0, 240),
-        cv.Required("height"): cv.int_range(0, 320),
-        cv.Required("text"): cv.string,
-        cv.Required("fontsize"): cv.int_range(0, 20)
+    cv.Optional(CONF_BUTTONS, default=[]): cv.All([dict({
+        cv.Required(CONF_BUTTON_X): cv.int_range(0, 240),
+        cv.Required(CONF_BUTTON_Y): cv.int_range(0, 320),
+        cv.Required(CONF_BUTTON_WIDTH): cv.int_range(0, 240),
+        cv.Required(CONF_BUTTON_HEIGHT): cv.int_range(0, 320),
+        cv.Required(CONF_BUTTON_TEXT): cv.string,
+        cv.Optional(CONF_BUTTON_FONTSIZE, default=3): cv.int_range(0, 10),
+        cv.Optional(CONF_BUTTON_COLOR, default=DEFAULT_BUTTON_COLOR): cv.string,
+        cv.Optional(CONF_BUTTON_TEXT_COLOR, default=DEFAULT_BUTTON_TEXT_COLOR): cv.string,
+        cv.Optional(CONF_BUTTON_BG_COLOR, default=DEFAULT_BUTTON_BG_COLOR): cv.string,
+
     })])
 }).extend(cv.COMPONENT_SCHEMA)
 
@@ -79,7 +88,10 @@ def to_code(config):
                                     btn[CONF_BUTTON_WIDTH],
                                     btn[CONF_BUTTON_HEIGHT],
                                     btn[CONF_BUTTON_TEXT],
-                                    btn[CONF_BUTTON_FONTSIZE]))
+                                    btn[CONF_BUTTON_FONTSIZE],
+                                    btn[CONF_BUTTON_COLOR],
+                                    btn[CONF_BUTTON_TEXT_COLOR],
+                                    btn[CONF_BUTTON_BG_COLOR]))
     else:
         cg.add(var.createButton(10,
                                 10,

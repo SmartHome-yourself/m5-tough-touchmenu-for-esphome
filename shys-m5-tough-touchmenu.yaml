@@ -38,6 +38,8 @@ esp32:
   board: esp32dev
 
 logger:
+  level: INFO
+  
 api:
 
 ota:

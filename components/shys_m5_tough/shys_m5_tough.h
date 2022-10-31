@@ -55,6 +55,7 @@ namespace esphome
 
         std::uint16_t color = TFT_BLUE;
         std::uint16_t bg_color = TFT_DARKGREY;
+        std::uint16_t text_color = TFT_WHITE;
 
         int x = -1;
         int y = -1;
@@ -75,7 +76,7 @@ namespace esphome
         void draw(void)
         {
           M5.Display.setColor(color);
-          M5.Display.setTextColor(color, bg_color);
+          M5.Display.setTextColor(text_color, bg_color);
           M5.Display.setTextSize(fontsize);
 
           for (int i = 0; i < LINE_THICKNESS; ++i)
@@ -175,15 +176,9 @@ namespace esphome
        * @param text
        * @param fontsize
        */
-      void createButton(int x, int y, int width, int height, String text, int fontsize)
+      void createButton(int x, int y, int width, int height, String text, int fontsize, String color, String textcolor, String bgcolor)
       {
-        buttons[BUTTON_PAGE][buttonAnzahl[BUTTON_PAGE]].x = x;
-        buttons[BUTTON_PAGE][buttonAnzahl[BUTTON_PAGE]].y = y;
-        buttons[BUTTON_PAGE][buttonAnzahl[BUTTON_PAGE]].w = width;
-        buttons[BUTTON_PAGE][buttonAnzahl[BUTTON_PAGE]].h = height;
-        buttons[BUTTON_PAGE][buttonAnzahl[BUTTON_PAGE]].text = text;
-        buttons[BUTTON_PAGE][buttonAnzahl[BUTTON_PAGE]].fontsize = fontsize;
-
+        updateButton(buttonAnzahl[BUTTON_PAGE], x, y, width, height, text, fontsize, color, textcolor, bgcolor);
         buttonAnzahl[BUTTON_PAGE] = buttonAnzahl[BUTTON_PAGE] + 1;
       }
 
@@ -198,7 +193,7 @@ namespace esphome
        * @param text
        * @param fontsize
        */
-      void updateButton(int index, int x, int y, int width, int height, String text, int fontsize)
+      void updateButton(int index, int x, int y, int width, int height, String text, int fontsize, String color, String textcolor, String bgcolor)
       {
         buttons[BUTTON_PAGE][index].x = x;
         buttons[BUTTON_PAGE][index].y = y;
@@ -206,6 +201,89 @@ namespace esphome
         buttons[BUTTON_PAGE][index].h = height;
         buttons[BUTTON_PAGE][index].text = text;
         buttons[BUTTON_PAGE][index].fontsize = fontsize;
+        buttons[BUTTON_PAGE][buttonAnzahl[BUTTON_PAGE]].color = getColor(color.c_str());
+        buttons[BUTTON_PAGE][buttonAnzahl[BUTTON_PAGE]].text_color = getColor(textcolor.c_str());
+        buttons[BUTTON_PAGE][buttonAnzahl[BUTTON_PAGE]].bg_color = getColor(bgcolor.c_str());
+      }
+
+      int getColor(const char *colorname)
+      {
+        if (strcmp(colorname, "TFT_BLACK") == 0)
+        {
+          return TFT_BLACK;
+        }
+        else if (strcmp(colorname, "TFT_NAVY") == 0)
+        {
+          return TFT_NAVY;
+        }
+        else if (strcmp(colorname, "TFT_DARKGREEN") == 0)
+        {
+          return TFT_DARKGREEN;
+        }
+        else if (strcmp(colorname, "TFT_MAROON") == 0)
+        {
+          return TFT_MAROON;
+        }
+        else if (strcmp(colorname, "TFT_PURPLE") == 0)
+        {
+          return TFT_PURPLE;
+        }
+        else if (strcmp(colorname, "TFT_OLIVE") == 0)
+        {
+          return TFT_OLIVE;
+        }
+        else if (strcmp(colorname, "TFT_LIGHTGREY") == 0)
+        {
+          return TFT_LIGHTGREY;
+        }
+        else if (strcmp(colorname, "TFT_DARKGREY") == 0)
+        {
+          return TFT_DARKGREY;
+        }
+        else if (strcmp(colorname, "TFT_BLUE") == 0)
+        {
+          return TFT_BLUE;
+        }
+        else if (strcmp(colorname, "TFT_GREENYELLOW") == 0)
+        {
+          return TFT_GREENYELLOW;
+        }
+        else if (strcmp(colorname, "TFT_GREEN") == 0)
+        {
+          return TFT_GREEN;
+        }
+        else if (strcmp(colorname, "TFT_YELLOW") == 0)
+        {
+          return TFT_YELLOW;
+        }
+        else if (strcmp(colorname, "TFT_ORANGE") == 0)
+        {
+          return TFT_ORANGE;
+        }
+        else if (strcmp(colorname, "TFT_PINK") == 0)
+        {
+          return TFT_PINK;
+        }
+        else if (strcmp(colorname, "TFT_CYAN") == 0)
+        {
+          return TFT_CYAN;
+        }
+        else if (strcmp(colorname, "TFT_DARKCYAN") == 0)
+        {
+          return TFT_DARKCYAN;
+        }
+        else if (strcmp(colorname, "TFT_RED") == 0)
+        {
+          return TFT_RED;
+        }
+        else if (strcmp(colorname, "TFT_MAGENTA") == 0)
+        {
+          return TFT_MAGENTA;
+        }
+        else if (strcmp(colorname, "TFT_WHITE") == 0)
+        {
+          return TFT_WHITE;
+        }
       }
 
       /**
@@ -579,54 +657,63 @@ namespace esphome
         buttons[PASSWORD_PAGE][0].w = 60;
         buttons[PASSWORD_PAGE][0].h = 60;
         buttons[PASSWORD_PAGE][0].text = "1";
+        buttons[PASSWORD_PAGE][0].fontsize = 3;
 
         buttons[PASSWORD_PAGE][1].x = 90;
         buttons[PASSWORD_PAGE][1].y = 40;
         buttons[PASSWORD_PAGE][1].w = 60;
         buttons[PASSWORD_PAGE][1].h = 60;
         buttons[PASSWORD_PAGE][1].text = "2";
+        buttons[PASSWORD_PAGE][1].fontsize = 3;
 
         buttons[PASSWORD_PAGE][2].x = 160;
         buttons[PASSWORD_PAGE][2].y = 40;
         buttons[PASSWORD_PAGE][2].w = 60;
         buttons[PASSWORD_PAGE][2].h = 60;
         buttons[PASSWORD_PAGE][2].text = "3";
+        buttons[PASSWORD_PAGE][2].fontsize = 3;
         // ---------------------
         buttons[PASSWORD_PAGE][3].x = 20;
         buttons[PASSWORD_PAGE][3].y = 110;
         buttons[PASSWORD_PAGE][3].w = 60;
         buttons[PASSWORD_PAGE][3].h = 60;
         buttons[PASSWORD_PAGE][3].text = "4";
+        buttons[PASSWORD_PAGE][3].fontsize = 3;
 
         buttons[PASSWORD_PAGE][4].x = 90;
         buttons[PASSWORD_PAGE][4].y = 110;
         buttons[PASSWORD_PAGE][4].w = 60;
         buttons[PASSWORD_PAGE][4].h = 60;
         buttons[PASSWORD_PAGE][4].text = "5";
+        buttons[PASSWORD_PAGE][4].fontsize = 3;
 
         buttons[PASSWORD_PAGE][5].x = 160;
         buttons[PASSWORD_PAGE][5].y = 110;
         buttons[PASSWORD_PAGE][5].w = 60;
         buttons[PASSWORD_PAGE][5].h = 60;
         buttons[PASSWORD_PAGE][5].text = "6";
+        buttons[PASSWORD_PAGE][5].fontsize = 3;
         // ---------------------
         buttons[PASSWORD_PAGE][6].x = 20;
         buttons[PASSWORD_PAGE][6].y = 180;
         buttons[PASSWORD_PAGE][6].w = 60;
         buttons[PASSWORD_PAGE][6].h = 60;
         buttons[PASSWORD_PAGE][6].text = "7";
+        buttons[PASSWORD_PAGE][6].fontsize = 3;
 
         buttons[PASSWORD_PAGE][7].x = 90;
         buttons[PASSWORD_PAGE][7].y = 180;
         buttons[PASSWORD_PAGE][7].w = 60;
         buttons[PASSWORD_PAGE][7].h = 60;
         buttons[PASSWORD_PAGE][7].text = "8";
+        buttons[PASSWORD_PAGE][7].fontsize = 3;
 
         buttons[PASSWORD_PAGE][8].x = 160;
         buttons[PASSWORD_PAGE][8].y = 180;
         buttons[PASSWORD_PAGE][8].w = 60;
         buttons[PASSWORD_PAGE][8].h = 60;
         buttons[PASSWORD_PAGE][8].text = "9";
+        buttons[PASSWORD_PAGE][8].fontsize = 3;
         // ---------------------
         buttons[PASSWORD_PAGE][9].x = 20;
         buttons[PASSWORD_PAGE][9].y = 260;
@@ -634,12 +721,14 @@ namespace esphome
         buttons[PASSWORD_PAGE][9].h = 60;
         buttons[PASSWORD_PAGE][9].text = "X";
         buttons[PASSWORD_PAGE][9].bg_color = TFT_RED;
+        buttons[PASSWORD_PAGE][9].fontsize = 3;
 
         buttons[PASSWORD_PAGE][10].x = 90;
         buttons[PASSWORD_PAGE][10].y = 260;
         buttons[PASSWORD_PAGE][10].w = 60;
         buttons[PASSWORD_PAGE][10].h = 60;
         buttons[PASSWORD_PAGE][10].text = "0";
+        buttons[PASSWORD_PAGE][10].fontsize = 3;
 
         buttons[PASSWORD_PAGE][11].x = 160;
         buttons[PASSWORD_PAGE][11].y = 260;
@@ -647,6 +736,7 @@ namespace esphome
         buttons[PASSWORD_PAGE][11].h = 60;
         buttons[PASSWORD_PAGE][11].text = "OK";
         buttons[PASSWORD_PAGE][11].bg_color = TFT_GREEN;
+        buttons[PASSWORD_PAGE][11].fontsize = 3;
       }
 
       /**
@@ -662,8 +752,10 @@ namespace esphome
         buttons[OK][0].w = 240;
         buttons[OK][0].h = 320;
         buttons[OK][0].bg_color = TFT_LIGHTGREY;
+        buttons[OK][0].text_color = TFT_GREEN;
         buttons[OK][0].color = TFT_GREEN;
         buttons[OK][0].text = "OK";
+        buttons[OK][0].fontsize = 6;
       }
 
       /**
@@ -678,9 +770,11 @@ namespace esphome
         buttons[FAILURE][0].y = 0;
         buttons[FAILURE][0].w = 240;
         buttons[FAILURE][0].h = 320;
-        buttons[FAILURE][0].bg_color = TFT_DARKGREY;
+        buttons[FAILURE][0].bg_color = TFT_YELLOW;
+        buttons[FAILURE][0].text_color = TFT_RED;
         buttons[FAILURE][0].color = TFT_RED;
         buttons[FAILURE][0].text = "X";
+        buttons[FAILURE][0].fontsize = 8;
       }
 
       /**
@@ -792,33 +886,35 @@ namespace esphome
 
         showCurrentPage();
       }
-      /**
-       Farben
-      ----------------
-      TFT_BLACK
-      TFT_WHITE
-      TFT_LIGHTGREY
-      TFT_DARKGREY
-      TFT_NAVY
-      TFT_DARKGREEN
-      TFT_DARKCYAN
-      TFT_MAROON
-      TFT_PURPLE
-      TFT_OLIVE
-      TFT_BLUE
-      TFT_GREEN
-      TFT_CYAN
-      TFT_RED
-      TFT_MAGENTA
-      TFT_YELLOW
-      TFT_ORANGE
-      TFT_GREENYELLOW
-      TFT_PINK
-      TFT_TRANSPARENT
 
-      * Display Auflösung: 320*240
+      /**
+       Display / Farben
+      ----------------
+      The screen pixel is 320x240, with the top left corner of the screen as the origin (0,0)
+
+      Definition	Value	R	G	B
+      TFT_BLACK	      0x0000	0	0	0
+      TFT_NAVY	      0x000F	0	0	128
+      TFT_DARKGREEN	  0x03E0	0	128	0
+      TFT_MAROON  	  0x7800	128	0	0
+      TFT_PURPLE  	  0x780F	128	0	128
+      TFT_OLIVE	      0x7BE0	128	128	0
+      TFT_LIGHTGREY	  0xC618	192	192	192
+      TFT_DARKGREY	  0x7BEF	128	128	128
+      TFT_BLUE	      0x001F	0	0	255
+      TFT_GREENYELLOW	0xB7E0	180	255	0
+      TFT_GREEN	      0x07E0	0	255	0
+      TFT_YELLOW	    0xFFE0	255	255	0
+      TFT_ORANGE	    0xFDA0	255	180	0
+      TFT_PINK	      0xFC9F	255	255	16
+      TFT_CYAN	      0x07FF	0	255	255
+      TFT_DARKCYAN	  0x03EF	0	128	128
+      TFT_RED	        0xF800	255	0	0
+      TFT_MAGENTA	    0xF81F	255	0	255
+      TFT_WHITE	      0xFFFF	255	255	255
+
       */
     };
 
-  } // namespace empty_text_sensor
-} // namespace esphome
+  }
+}
