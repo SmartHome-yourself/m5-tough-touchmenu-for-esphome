@@ -1,8 +1,8 @@
-substitutions:
-  devicename: "m5-tough"
-  display_name: "M5 Tough"
-  wifi_ssid: "unknown"
-  wifi_password: "unknown"
+#substitutions:
+#  devicename: "m5-tough"
+#  display_name: "M5 Tough"
+#  wifi_ssid: "unknown"
+#  wifi_password: "unknown"
   
 esphome:
   name: ${devicename}
