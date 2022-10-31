@@ -1,0 +1,143 @@
+substitutions:
+  devicename: "m5-tough"
+  display_name: "M5 Tough"
+  
+esphome:
+  name: ${devicename}
+
+  platformio_options:
+    platform: espressif32@3.0.0
+    board: esp32dev
+    framework: arduino
+
+    lib_deps:
+      - WiFi
+      - SPI
+      - FS
+      - Wire
+      - EEPROM
+      - m5stack/M5Unified @ 0.0.7
+
+  on_boot:
+    priority: 0
+    then:
+      - binary_sensor.template.publish:
+          id: logged_in
+          state: off
+      - sensor.template.publish:
+          id: failed_logins
+          state: 0
+
+external_components:
+  - source: my_components
+
+esp32:
+  board: esp32dev
+
+logger:
+api:
+
+ota:
+  password: "4c34d1666aad1195bf769c0c0e54c6ee"
+
+wifi:
+  ssid: !secret WLanSSID
+  password: !secret WLanPassword
+  ap:
+    ssid: ${display_name} "Fallback Hotspot"
+    password: "q1We1Dc5kkQe"
+captive_portal:
+
+binary_sensor:
+  - platform: template
+    name: "M5 Touch Angemeldet"
+    id: logged_in
+
+  - platform: template
+    name: "M5 Touch Display on"
+    id: display_on
+
+sensor:
+  - platform: template
+    name: "Failed Logins"
+    id: failed_logins
+    accuracy_decimals: 0
+    unit_of_measurement: "Fehler"
+
+
+text_sensor:
+  - platform: shys_m5_tough
+    name: "M5 Tough Status"
+    id: m5_tough_status
+    init_sound: on
+    login_enabled: on
+    buttons:
+      - x: 10
+        y: 10
+        width: 220
+        height: 300
+        text: "Sample"
+        fontsize: 4
+
+
+    on_value:
+      then:
+        - if:
+            condition:
+              text_sensor.state:
+                id: m5_tough_status
+                state: "Login OK"
+            then:
+              - binary_sensor.template.publish:
+                  id: logged_in
+                  state: on
+              - sensor.template.publish:
+                  id: failed_logins
+                  state: 0
+
+        - if:
+            condition:
+              text_sensor.state:
+                id: m5_tough_status
+                state: "Login failed"
+            then:
+              - lambda: "id(failed_logins).publish_state( id(failed_logins).state + 1 );"
+
+        - if:
+            condition:
+              - or:
+                  - text_sensor.state:
+                      id: m5_tough_status
+                      state: "Login failed"
+                  - text_sensor.state:
+                      id: m5_tough_status
+                      state: "Screen locked"
+                  - text_sensor.state:
+                      id: m5_tough_status
+                      state: "Display off"
+            then:
+              - binary_sensor.template.publish:
+                  id: logged_in
+                  state: OFF
+
+        - if:
+            condition:
+              - or:
+                  - text_sensor.state:
+                      id: m5_tough_status
+                      state: "Display on"
+            then:
+              - binary_sensor.template.publish:
+                  id: display_on
+                  state: ON
+
+        - if:
+            condition:
+              - or:
+                  - text_sensor.state:
+                      id: m5_tough_status
+                      state: "Display off"
+            then:
+              - binary_sensor.template.publish:
+                  id: display_on
+                  state: OFF
