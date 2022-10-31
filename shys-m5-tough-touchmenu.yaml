@@ -1,6 +1,8 @@
 substitutions:
   devicename: "m5-tough"
   display_name: "M5 Tough"
+  wifi_ssid: "unknown"
+  wifi_password: "unknown"
   
 esphome:
   name: ${devicename}
@@ -41,8 +43,8 @@ ota:
   password: "4c34d1666aad1195bf769c0c0e54c6ee"
 
 wifi:
-  ssid: !secret WLanSSID
-  password: !secret WLanPassword
+  ssid: ${wifi_ssid}
+  password: ${wifi_password}
   ap:
     ssid: ${display_name} "Fallback Hotspot"
     password: "q1We1Dc5kkQe"
