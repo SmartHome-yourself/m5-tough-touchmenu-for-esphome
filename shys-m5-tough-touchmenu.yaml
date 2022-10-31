@@ -3,6 +3,7 @@
 #  display_name: "M5 Tough"
 #  wifi_ssid: "unknown"
 #  wifi_password: "unknown"
+#  m5_textsensor_id: "m5_textsensor_id"
   
 esphome:
   name: ${devicename}
@@ -68,26 +69,20 @@ sensor:
 
 
 text_sensor:
-  - platform: shys_m5_tough
-    name: "M5 Tough Status"
-    id: m5_tough_status
-    init_sound: on
-    login_enabled: on
-    buttons:
-      - x: 10
-        y: 10
-        width: 220
-        height: 300
-        text: "Sample"
-        fontsize: 4
 
+  - platform: template
+    id: m5_state_tpl
+    name: m5_state
+    lambda: |-
+      return {id(${m5_textsensor_id}).state};
+    update_interval: 500ms
 
     on_value:
       then:
         - if:
             condition:
               text_sensor.state:
-                id: m5_tough_status
+                id: m5_state_tpl
                 state: "Login OK"
             then:
               - binary_sensor.template.publish:
@@ -100,7 +95,7 @@ text_sensor:
         - if:
             condition:
               text_sensor.state:
-                id: m5_tough_status
+                id: m5_state_tpl
                 state: "Login failed"
             then:
               - lambda: "id(failed_logins).publish_state( id(failed_logins).state + 1 );"
@@ -109,13 +104,13 @@ text_sensor:
             condition:
               - or:
                   - text_sensor.state:
-                      id: m5_tough_status
+                      id: m5_state_tpl
                       state: "Login failed"
                   - text_sensor.state:
-                      id: m5_tough_status
+                      id: m5_state_tpl
                       state: "Screen locked"
                   - text_sensor.state:
-                      id: m5_tough_status
+                      id: m5_state_tpl
                       state: "Display off"
             then:
               - binary_sensor.template.publish:
@@ -126,7 +121,7 @@ text_sensor:
             condition:
               - or:
                   - text_sensor.state:
-                      id: m5_tough_status
+                      id: m5_state_tpl
                       state: "Display on"
             then:
               - binary_sensor.template.publish:
@@ -137,9 +132,10 @@ text_sensor:
             condition:
               - or:
                   - text_sensor.state:
-                      id: m5_tough_status
+                      id: m5_state_tpl
                       state: "Display off"
             then:
               - binary_sensor.template.publish:
                   id: display_on
                   state: OFF
+
