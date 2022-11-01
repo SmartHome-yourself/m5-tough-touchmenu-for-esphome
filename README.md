@@ -98,7 +98,7 @@ text_sensor:
         fontsize: 4
         color: "TFT_BLUE"
         textcolor: "TFT_WHITE"
-        bgcolor: "TFT_DARKGRAY"
+        bgcolor: "TFT_DARKGREY"
 
     on_value:
       then:
