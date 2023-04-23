@@ -29,20 +29,15 @@ esphome:
           state: 0
 
 external_components:
-#  - source:
-#      type: git
-#      url: https://github.com/SmartHome-yourself/m5-tough-touchmenu-for-esphome
-#      ref: main
-#      components: [shys_m5_tough]
-     
-  - source: 
-      type: local
-      path: my_components
-
-
-#dashboard_import:
-#  package_import_url: github://SmartHome-yourself/m5-tough-touchmenu-for-esphome/shys-m5-tough-touchmenu.yaml@main
-#  import_full_config: false
+  - source:
+      type: git
+      url: https://github.com/SmartHome-yourself/m5-tough-touchmenu-for-esphome
+      ref: main
+      components: [shys_m5_tough]
+ 
+dashboard_import:
+  package_import_url: github://SmartHome-yourself/m5-tough-touchmenu-for-esphome/shys-m5-tough-touchmenu.yaml@main
+  import_full_config: false
 
 esp32:
   board: esp32dev
