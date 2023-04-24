@@ -5,7 +5,11 @@ substitutions:
   
 esphome:
   name: ${name}
-
+  name_add_mac_suffix: true
+  project:
+    name: smarthomeyourself.barcodescanner
+    version: "1.0"
+    
   platformio_options:
     board: esp32dev
     framework: arduino
