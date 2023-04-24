@@ -8,18 +8,22 @@ Automatisierungen lassen sich damit natürlich auch realisieren.
 Die Standard Binär-Sensoren für "Angemeldet", "Display an" und der Sensor für die Anzahl fehlgeschlagener Logins seit letzter erfolgreicher Anmeldung stehen auch hierbei zur Verfügung.  
 ```
 substitutions:
-  devicename: "m5-external-comp-test"
-  display_name: "M5 Tough"
-  wifi_ssid: !secret wifi_ssid
-  wifi_password: !secret wifi_password
+  name: shys-m5-tough-123456
+  friendly_name: "M5 Tough"
   m5_textsensor_id: "m5_textsensor_id"
 
 packages:
-  m5_tough_package: 
-    url: https://github.com/SmartHome-yourself/m5-tough-touchmenu-for-esphome
-    ref: main
-    file: shys-m5-tough-touchmenu.yaml
-    refresh: 1h
+  smarthomeyourself.barcodescanner: github://SmartHome-yourself/m5-tough-touchmenu-for-esphome/shys-m5-tough-touchmenu.yaml@main
+
+esphome:
+  name: ${name}
+  name_add_mac_suffix: false
+
+api:
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
 
 text_sensor:  
   - platform: shys_m5_tough
@@ -52,18 +56,23 @@ Die Standard Binär-Sensoren für "Angemeldet", "Display an" und der Sensor für
 
 ```
 substitutions:
-  devicename: "m5-external-comp-test"
-  display_name: "M5 Tough"
-  wifi_ssid: !secret wifi_ssid
-  wifi_password: !secret wifi_password
+  name: shys-m5-tough-123456
+  friendly_name: "M5 Tough"
   m5_textsensor_id: "m5_textsensor_id"
 
 packages:
-  m5_tough_package: 
-    url: https://github.com/SmartHome-yourself/m5-tough-touchmenu-for-esphome
-    ref: main
-    file: shys-m5-tough-touchmenu.yaml
-    refresh: 1h
+  smarthomeyourself.barcodescanner: github://SmartHome-yourself/m5-tough-touchmenu-for-esphome/shys-m5-tough-touchmenu.yaml@main
+
+esphome:
+  name: ${name}
+  name_add_mac_suffix: false
+
+api:
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
 
 binary_sensor:
   - platform: template
