@@ -1,29 +1,34 @@
 # m5-tough-touchmenu-for-esphome  
+Dieses Projekt bietet ein frei konfigurierbares Touch-Menü für das M5Stack Tough.  
   
+Über die ESPHome Konfiguration wird ein Text-Sensor vom Typ `shys_m5_tough` angelegt und über das Attribut `buttons` die gewünschten Schaltflächen angegeben.  
+Der Textsensor liefert alle Informationen zum Status und eventuellen Touch-Events.  
+  
+----
+
 ## Minimale Konfiguration
 Dieses Beispiel zeigt das absolute Minimum der ESPHome Konfiguration für zwei Buttons.  
 In dieser Variante steht für den Tastendruck nur der Wert des Textsensor zur Verfügung.  
 Automatisierungen lassen sich damit natürlich auch realisieren.  
 
-Die Standard Binär-Sensoren für "Angemeldet", "Display an" und der Sensor für die Anzahl fehlgeschlagener Logins seit letzter erfolgreicher Anmeldung stehen auch hierbei zur Verfügung.  
+Die Standard Binär-Sensoren für "Angemeldet", "Display an" und der Sensor für die Anzahl fehlgeschlagener Logins seit letzter erfolgreicher Anmeldung stehen immer zur Verfügung.  
+  
 ```
 substitutions:
   name: shys-m5-tough-123456
   friendly_name: "M5 Tough"
   m5_textsensor_id: "m5_textsensor_id"
+  wifi_ssid: !secret wifi_ssid
+  wifi_password: !secret wifi_password
 
 packages:
-  smarthomeyourself.barcodescanner: github://SmartHome-yourself/m5-tough-touchmenu-for-esphome/shys-m5-tough-touchmenu.yaml@main
+  smarthomeyourself.m5_tough: github://SmartHome-yourself/m5-tough-touchmenu-for-esphome/shys-m5-tough-touchmenu.yaml@main
 
 esphome:
   name: ${name}
   name_add_mac_suffix: false
 
 api:
-
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
 
 text_sensor:  
   - platform: shys_m5_tough
@@ -44,13 +49,142 @@ text_sensor:
         width: 220
         height: 150
         text: "Garage"
+```
+  
+  
+  
+# Konfiguration
+In den Substitutions sollten `name`, `friendly_name` und `m5_textsensor_id` angegeben werden.  
+  
+## Alle zur Verfügung stehenden Parameter (Substitutions):
 
 ```
+substitutions:
+  name: "m5-tough"
+  friendly_name: "M5 Tough"
+  m5_textsensor_id: "m5_textsensor_id"
+```
+  
+### name
+*default: m5-tough*  
+Der Hostname des Geräts.  
+  
+### friendly_name
+*default: M5 Tough*  
+Der Name, der im Frontend angezeigt wird.  
+  
+### m5_textsensor_id
+*default: m5_textsensor_id*  
+Gibt die ID des Textsensors vom Platform-Typ `shys_m5_tough` an. 
+  
+### wifi_ssid
+*default: !secret wifi_ssid*  
+Gibt den Namen des WLAN an, in das verbunden werden soll
+  
+### wifi_password
+*default: !secret wifi_password*  
+Gibt das WLAN-Passwort an
 
   
-## Vollständige Konfiguration mit Binary-Sensoren für die einzelnen Taster des Touchscreen-Menüs
-In diesem Beispiel wird für jeden Button zusätzlich noch ein eigener Binär-Sensor angelegt.  
-Diese Sensoren werden über "on_value" am Text-Sensor aktualisiert.  
+&nbsp;  
+  
+## Text-Sensor
+**Beispiel:**
+```
+text_sensor:  
+  - platform: shys_m5_tough
+    name: "Mein M5-Tough"
+    id: m5_textsensor_id
+    init_sound: off
+    login_enabled: on
+
+    buttons:
+      - x: 1
+        y: 1
+        width: 100
+        height: 100
+        text: "Mein Touchfeld"
+```
+### platform
+Die Platform des Textsensors muss `shys_m5_tough` sein.
+### name
+Der Name des Textsensor kann frei gewählt werden.
+### id
+Die ID sollte `m5_textsensor_id` sein. (Ansonsten sollte diese mit der Substitution "m5_textsensor_id" übereinstimmen)
+### init_sound
+Gibt an, ob beim Einschalten eine kurze Melodie abgespielt werden soll.  
+*Gültige Werte: on/off*
+### login_enabled
+Hier lässt sich der Login an/abschalten.  
+Bei aktiviertem Login wird das Display automatisch nach einigen Sekunden inaktivität wieder gesperrt.
+*Gültige Werte: on/off*
+### buttons:
+Das Attribut `buttons` ist eine Liste, in der die einzelnen Schaltflächen für das Touchmenü hinterlegt werden können.  
+Es können beliebig viele Schaltflächen angelegt werden.  
+  
+**x**  
+Gibt die X-Koordinate der Schaltfläche an  
+**y**  
+Gibt die Y-Koordinate der Schaltfläche an  
+**width**  
+Gibt die Breite der Schaltfläche an  
+**height**  
+Gibt die Höhe der Schaltfläche an  
+**text**  
+Gibt die Beschriftung der Schaltfläche an.  
+Dieser Text wird auch im Textsensor beim drücken der Schaltfläche mit ausgegeben, um auswerten zu können, welches Element gedrückt wurde.  
+
+  
+## Farben
+Hier eine Liste der Möglichen Farbwerte:
+TFT_BLACK      /*   0,   0,   0 */
+TFT_NAVY      /*   0,   0, 128 */
+TFT_DARKGREEN      /*   0, 128,   0 */
+TFT_DARKCYAN      /*   0, 128, 128 */
+TFT_MAROON      0x7800      /* 128,   0,   0 */
+TFT_PURPLE      0x780F      /* 128,   0, 128 */
+TFT_OLIVE       0x7BE0      /* 128, 128,   0 */
+TFT_LIGHTGREY   0xD69A      /* 211, 211, 211 */
+TFT_DARKGREY    0x7BEF      /* 128, 128, 128 */
+TFT_BLUE        0x001F      /*   0,   0, 255 */
+TFT_GREEN       0x07E0      /*   0, 255,   0 */
+TFT_CYAN        0x07FF      /*   0, 255, 255 */
+TFT_RED         0xF800      /* 255,   0,   0 */
+TFT_MAGENTA     0xF81F      /* 255,   0, 255 */
+TFT_YELLOW      0xFFE0      /* 255, 255,   0 */
+TFT_WHITE       0xFFFF      /* 255, 255, 255 */
+TFT_ORANGE      0xFDA0      /* 255, 180,   0 */
+TFT_GREENYELLOW 0xB7E0      /* 180, 255,   0 */
+TFT_PINK        0xFE19      /* 255, 192, 203 */ //Lighter pink, was 0xFC9F
+TFT_BROWN       0x9A60      /* 150,  75,   0 */
+TFT_GOLD        0xFEA0      /* 255, 215,   0 */
+TFT_SILVER      0xC618      /* 192, 192, 192 */
+TFT_SKYBLUE     0x867D      /* 135, 206, 235 */
+TFT_VIOLET      0x915C      /* 180,  46, 226 */
+  
+-----    
+    
+# Dienste
+##  esphome.<name>_setnewpassword
+Ein Dienst, über den aus Home Assistant heraus das Passwort zum Entsperren des Displays festgelegt werden kann.  
+
+### Attribute
+**new_password** 
+
+  
+##  esphome.<name>_showcurrentpassword
+Gibt das aktuelle Passwort im Log über die Serielle Konsole aus  
+
+  
+&nbsp;    
+  
+-----
+  
+&nbsp;  
+  
+# Zusätzlichen Binary-Sensoren für jede Touchfläche
+In diesem Beispiel wird für jeden Button zusätzlich je ein eigener Binär-Sensor angelegt.  
+Diese Sensoren werden dann über die "on_value"-Aktion am Text-Sensor aktualisiert.  
   
 Die Standard Binär-Sensoren für "Angemeldet", "Display an" und der Sensor für die Anzahl fehlgeschlagener Logins seit letzter erfolgreicher Anmeldung stehen auch hierbei zur Verfügung.  
 
@@ -61,7 +195,7 @@ substitutions:
   m5_textsensor_id: "m5_textsensor_id"
 
 packages:
-  smarthomeyourself.barcodescanner: github://SmartHome-yourself/m5-tough-touchmenu-for-esphome/shys-m5-tough-touchmenu.yaml@main
+  smarthomeyourself.m5_tough: github://SmartHome-yourself/m5-tough-touchmenu-for-esphome/shys-m5-tough-touchmenu.yaml@main
 
 esphome:
   name: ${name}
@@ -87,7 +221,7 @@ text_sensor:
   - platform: shys_m5_tough
     name: "M5 Tough Status"
     id: m5_textsensor_id
-    init_sound: on
+    init_sound: off
     login_enabled: on
 
     buttons:
@@ -138,5 +272,4 @@ text_sensor:
               - binary_sensor.template.publish:
                   id: motorrad_tor_taster
                   state: OFF
-
 ```
