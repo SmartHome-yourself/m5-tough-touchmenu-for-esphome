@@ -165,14 +165,14 @@ TFT_VIOLET      0x915C      /* 180,  46, 226 */
 -----    
     
 # Dienste
-##  esphome.<name>_setnewpassword
+##  esphome.\<name\>_setnewpassword
 Ein Dienst, über den aus Home Assistant heraus das Passwort zum Entsperren des Displays festgelegt werden kann.  
 
 ### Attribute
 **new_password** 
 
   
-##  esphome.<name>_showcurrentpassword
+##  esphome.\<name\>_showcurrentpassword
 Gibt das aktuelle Passwort im Log über die Serielle Konsole aus  
 
   
