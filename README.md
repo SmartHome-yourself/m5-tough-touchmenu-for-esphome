@@ -133,6 +133,17 @@ Gibt die Höhe der Schaltfläche an
 **text**  
 Gibt die Beschriftung der Schaltfläche an.  
 Dieser Text wird auch im Textsensor beim drücken der Schaltfläche mit ausgegeben, um auswerten zu können, welches Element gedrückt wurde.  
+**fontsize**  
+Legt die Schriftgröße des Textes auf dem Button fest.  
+**color**  
+Legt die Rahmen-Farbe des Button fest.  
+**textcolor**  
+Legt die Schriftfarbe des Textes auf dem Button fest.  
+**bgcolor**  
+Legt die Hintergrundfarbe des Button fest.  
+
+
+
 
   
 ## Farben
