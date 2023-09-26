@@ -106,6 +106,10 @@ text_sensor:
         width: 100
         height: 100
         text: "Mein Touchfeld"
+        fontsize: 4
+        color: "TFT_BLUE"
+        textcolor: "TFT_WHITE"
+        bgcolor: "TFT_DARKGREY"
 ```
 ### platform
 Die Platform des Textsensors muss `shys_m5_tough` sein.
