@@ -22,7 +22,9 @@ substitutions:
   wifi_password: !secret wifi_password
 
 packages:
-  smarthomeyourself.m5_tough: github://SmartHome-yourself/m5-tough-touchmenu-for-esphome/shys-m5-tough-touchmenu.yaml@main
+  smarthomeyourself.m5_tough: 
+    url: https://github.com/SmartHome-yourself/m5-tough-touchmenu-for-esphome
+    file: shys-m5-tough-touchmenu.yaml
 
 esphome:
   name: ${name}
@@ -148,30 +150,30 @@ Legt die Hintergrundfarbe des Button fest.
   
 ## Farben
 Hier eine Liste der Möglichen Farbwerte:
-TFT_BLACK      /*   0,   0,   0 */
-TFT_NAVY      /*   0,   0, 128 */
-TFT_DARKGREEN      /*   0, 128,   0 */
-TFT_DARKCYAN      /*   0, 128, 128 */
-TFT_MAROON      0x7800      /* 128,   0,   0 */
-TFT_PURPLE      0x780F      /* 128,   0, 128 */
-TFT_OLIVE       0x7BE0      /* 128, 128,   0 */
-TFT_LIGHTGREY   0xD69A      /* 211, 211, 211 */
-TFT_DARKGREY    0x7BEF      /* 128, 128, 128 */
-TFT_BLUE        0x001F      /*   0,   0, 255 */
-TFT_GREEN       0x07E0      /*   0, 255,   0 */
-TFT_CYAN        0x07FF      /*   0, 255, 255 */
-TFT_RED         0xF800      /* 255,   0,   0 */
-TFT_MAGENTA     0xF81F      /* 255,   0, 255 */
-TFT_YELLOW      0xFFE0      /* 255, 255,   0 */
-TFT_WHITE       0xFFFF      /* 255, 255, 255 */
-TFT_ORANGE      0xFDA0      /* 255, 180,   0 */
-TFT_GREENYELLOW 0xB7E0      /* 180, 255,   0 */
-TFT_PINK        0xFE19      /* 255, 192, 203 */ //Lighter pink, was 0xFC9F
-TFT_BROWN       0x9A60      /* 150,  75,   0 */
-TFT_GOLD        0xFEA0      /* 255, 215,   0 */
-TFT_SILVER      0xC618      /* 192, 192, 192 */
-TFT_SKYBLUE     0x867D      /* 135, 206, 235 */
-TFT_VIOLET      0x915C      /* 180,  46, 226 */
+TFT_BLACK      /*   0,   0,   0 */  
+TFT_NAVY      /*   0,   0, 128 */  
+TFT_DARKGREEN      /*   0, 128,   0 */  
+TFT_DARKCYAN      /*   0, 128, 128 */  
+TFT_MAROON      0x7800      /* 128,   0,   0 */  
+TFT_PURPLE      0x780F      /* 128,   0, 128 */  
+TFT_OLIVE       0x7BE0      /* 128, 128,   0 */  
+TFT_LIGHTGREY   0xD69A      /* 211, 211, 211 */  
+TFT_DARKGREY    0x7BEF      /* 128, 128, 128 */  
+TFT_BLUE        0x001F      /*   0,   0, 255 */  
+TFT_GREEN       0x07E0      /*   0, 255,   0 */  
+TFT_CYAN        0x07FF      /*   0, 255, 255 */  
+TFT_RED         0xF800      /* 255,   0,   0 */  
+TFT_MAGENTA     0xF81F      /* 255,   0, 255 */  
+TFT_YELLOW      0xFFE0      /* 255, 255,   0 */  
+TFT_WHITE       0xFFFF      /* 255, 255, 255 */  
+TFT_ORANGE      0xFDA0      /* 255, 180,   0 */  
+TFT_GREENYELLOW 0xB7E0      /* 180, 255,   0 */  
+TFT_PINK        0xFE19      /* 255, 192, 203 */  
+TFT_BROWN       0x9A60      /* 150,  75,   0 */  
+TFT_GOLD        0xFEA0      /* 255, 215,   0 */  
+TFT_SILVER      0xC618      /* 192, 192, 192 */  
+TFT_SKYBLUE     0x867D      /* 135, 206, 235 */  
+TFT_VIOLET      0x915C      /* 180,  46, 226 */  
   
 -----    
     
@@ -206,7 +208,9 @@ substitutions:
   m5_textsensor_id: "m5_textsensor_id"
 
 packages:
-  smarthomeyourself.m5_tough: github://SmartHome-yourself/m5-tough-touchmenu-for-esphome/shys-m5-tough-touchmenu.yaml@main
+  smarthomeyourself.m5_tough: 
+    url: https://github.com/SmartHome-yourself/m5-tough-touchmenu-for-esphome
+    file: shys-m5-tough-touchmenu.yaml
 
 esphome:
   name: ${name}
