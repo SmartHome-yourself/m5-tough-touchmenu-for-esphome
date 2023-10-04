@@ -1,9 +1,13 @@
 # m5-tough-touchmenu-for-esphome  
 Dieses Projekt bietet ein frei konfigurierbares Touch-Menü für das M5Stack Tough.  
+![image](https://github.com/SmartHome-yourself/m5-tough-touchmenu-for-esphome/assets/705724/436d5e05-b337-465f-96b5-c69d2b321631)
+
   
 Über die ESPHome Konfiguration wird ein Text-Sensor vom Typ `shys_m5_tough` angelegt und über das Attribut `buttons` die gewünschten Schaltflächen angegeben.  
 Der Textsensor liefert alle Informationen zum Status und eventuellen Touch-Events.  
-  
+
+Der Touchscreen sperrt sich zur Sicherheit standardmäßig nach einigen Sekunden und muss anschließend zuerst über eine PIN wieder freigegeben werden. Die Standard PIN ist: 12345  
+Diese PIN kann über einen Dienst jeder Zeit neu gesetzt werden.
 ----
 
 ## Minimale Konfiguration
@@ -158,26 +162,26 @@ TFT_BLACK      /*   0,   0,   0 */
 TFT_NAVY      /*   0,   0, 128 */  
 TFT_DARKGREEN      /*   0, 128,   0 */  
 TFT_DARKCYAN      /*   0, 128, 128 */  
-TFT_MAROON      0x7800      /* 128,   0,   0 */  
-TFT_PURPLE      0x780F      /* 128,   0, 128 */  
-TFT_OLIVE       0x7BE0      /* 128, 128,   0 */  
-TFT_LIGHTGREY   0xD69A      /* 211, 211, 211 */  
-TFT_DARKGREY    0x7BEF      /* 128, 128, 128 */  
-TFT_BLUE        0x001F      /*   0,   0, 255 */  
-TFT_GREEN       0x07E0      /*   0, 255,   0 */  
-TFT_CYAN        0x07FF      /*   0, 255, 255 */  
-TFT_RED         0xF800      /* 255,   0,   0 */  
-TFT_MAGENTA     0xF81F      /* 255,   0, 255 */  
-TFT_YELLOW      0xFFE0      /* 255, 255,   0 */  
-TFT_WHITE       0xFFFF      /* 255, 255, 255 */  
-TFT_ORANGE      0xFDA0      /* 255, 180,   0 */  
-TFT_GREENYELLOW 0xB7E0      /* 180, 255,   0 */  
-TFT_PINK        0xFE19      /* 255, 192, 203 */  
-TFT_BROWN       0x9A60      /* 150,  75,   0 */  
-TFT_GOLD        0xFEA0      /* 255, 215,   0 */  
-TFT_SILVER      0xC618      /* 192, 192, 192 */  
-TFT_SKYBLUE     0x867D      /* 135, 206, 235 */  
-TFT_VIOLET      0x915C      /* 180,  46, 226 */  
+TFT_MAROON      /* 128,   0,   0 */  
+TFT_PURPLE      /* 128,   0, 128 */  
+TFT_OLIVE      /* 128, 128,   0 */  
+TFT_LIGHTGREY      /* 211, 211, 211 */  
+TFT_DARKGREY      /* 128, 128, 128 */  
+TFT_BLUE      /*   0,   0, 255 */  
+TFT_GREEN      /*   0, 255,   0 */  
+TFT_CYAN      /*   0, 255, 255 */  
+TFT_RED      /* 255,   0,   0 */  
+TFT_MAGENTA      /* 255,   0, 255 */  
+TFT_YELLOW      /* 255, 255,   0 */  
+TFT_WHITE      /* 255, 255, 255 */  
+TFT_ORANGE      /* 255, 180,   0 */  
+TFT_GREENYELLOW      /* 180, 255,   0 */  
+TFT_PINK      /* 255, 192, 203 */  
+TFT_BROWN      /* 150,  75,   0 */  
+TFT_GOLD      /* 255, 215,   0 */  
+TFT_SILVER      /* 192, 192, 192 */  
+TFT_SKYBLUE      /* 135, 206, 235 */  
+TFT_VIOLET      /* 180,  46, 226 */  
   
 -----    
     
