@@ -1,6 +1,7 @@
 # m5-tough-touchmenu-for-esphome  
 Dieses Projekt bietet ein frei konfigurierbares Touch-Menü für das M5Stack Tough.  
-![image](https://github.com/SmartHome-yourself/m5-tough-touchmenu-for-esphome/assets/705724/436d5e05-b337-465f-96b5-c69d2b321631)
+![image](https://github.com/SmartHome-yourself/m5-tough-touchmenu-for-esphome/assets/705724/287fbc85-bf26-42ec-b6ef-de0167067412)
+
 
   
 Über die ESPHome Konfiguration wird ein Text-Sensor vom Typ `shys_m5_tough` angelegt und über das Attribut `buttons` die gewünschten Schaltflächen angegeben.  
