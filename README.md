@@ -6,9 +6,17 @@ Dieses Projekt bietet ein frei konfigurierbares Touch-Menü für das M5Stack Tou
   
 Über die ESPHome Konfiguration wird ein Text-Sensor vom Typ `shys_m5_tough` angelegt und über das Attribut `buttons` die gewünschten Schaltflächen angegeben.  
 Der Textsensor liefert alle Informationen zum Status und eventuellen Touch-Events.  
-
+  
 Der Touchscreen sperrt sich zur Sicherheit standardmäßig nach einigen Sekunden und muss anschließend zuerst über eine PIN wieder freigegeben werden. Die Standard PIN ist: 12345  
-Diese PIN kann über einen Dienst jeder Zeit neu gesetzt werden.
+Diese PIN kann über einen Dienst jeder Zeit neu gesetzt werden.  
+
+
+----
+# Video
+Auch dieses Projekt habe ich natürlich in einem Video für euch zusammengefasst:  
+[![M5-Tough](http://img.youtube.com/vi/bxei2mQFtwA/0.jpg)](https://www.youtube.com/watch?v=bxei2mQFtwA "M5 Tough mit ESPHome für Home Assistant")  
+  
+  
 ----
 
 ## Minimale Konfiguration
