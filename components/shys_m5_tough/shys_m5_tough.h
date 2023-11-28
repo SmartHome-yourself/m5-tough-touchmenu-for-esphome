@@ -19,6 +19,8 @@
 
 #define SYNC_WORD 0xA3
 
+#define EEPROM_SIZE 32
+
 namespace esphome
 {
   namespace shys_m5_tough
@@ -29,6 +31,8 @@ namespace esphome
     protected:
       bool init_sound_enabled = false;
       bool login_enabled = true;
+
+      String tmpPwInfo = "";
 
       String myPasswd = "12345";
       int timeToLock = 20000;
@@ -284,6 +288,8 @@ namespace esphome
         {
           return TFT_WHITE;
         }
+
+        return TFT_WHITE;
       }
 
       /**
@@ -807,6 +813,7 @@ namespace esphome
        */
       void showCurrentPassword()
       {
+        loadPassword();
         ESP_LOGI("current_password", "Aktuelles Passwort lautet: '%s'", myPasswd.c_str());
       }
 
@@ -820,6 +827,9 @@ namespace esphome
         if (tmpPw != NULL && !tmpPw.isEmpty())
         {
           myPasswd = tmpPw;
+          ESP_LOGI("current_password", "Aktuelles Passwort aus EEPROM: '%s'", myPasswd.c_str());
+        } else {
+          ESP_LOGI("current_password", "Aktuelles Passwort (kein gespeichertes Passwd gefunden): '%s'", myPasswd.c_str());
         }
       }
 
@@ -854,12 +864,16 @@ namespace esphome
        */
       void writeStringToEEPROM(int addrOffset, const String &strToWrite)
       {
+        EEPROM.begin(EEPROM_SIZE);
+
         byte len = strToWrite.length();
         EEPROM.write(addrOffset, len);
         for (int i = 0; i < len; i++)
         {
           EEPROM.write(addrOffset + 1 + i, strToWrite[i]);
         }
+        EEPROM.commit();
+        EEPROM.end();
       }
 
       /**
@@ -867,14 +881,24 @@ namespace esphome
        */
       String readStringFromEEPROM(int addrOffset)
       {
+        String retVal = "";
+
+        EEPROM.begin(EEPROM_SIZE);
+
         int newStrLen = EEPROM.read(addrOffset);
-        char data[newStrLen + 1];
-        for (int i = 0; i < newStrLen; i++)
-        {
-          data[i] = EEPROM.read(addrOffset + 1 + i);
+        if(!isnan(newStrLen)){
+          char data[newStrLen + 1];
+          for (int i = 0; i < newStrLen; i++)
+          {
+            data[i] = EEPROM.read(addrOffset + 1 + i);
+          }
+          data[newStrLen] = '\0';
+          
+          EEPROM.end();
+          retVal = String(data);
         }
-        data[newStrLen] = '\0';
-        return String(data);
+        
+        return retVal;
       }
 
       void refreshScreen()
