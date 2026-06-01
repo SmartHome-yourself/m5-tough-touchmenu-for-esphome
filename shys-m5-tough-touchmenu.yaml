@@ -91,7 +91,7 @@ text_sensor:
 
   - platform: template
     id: m5_state_tpl
-    name: ${friendly_name} Status
+    name: ${friendly_name} Template
     lambda: |-
       return {id(${m5_textsensor_id}).state};
     update_interval: 500ms
