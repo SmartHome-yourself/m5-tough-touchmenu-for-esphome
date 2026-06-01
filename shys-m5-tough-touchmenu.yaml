@@ -55,7 +55,11 @@ logger:
     binary_sensor: INFO
     text_sensor: INFO
 
+
 api:
+  homeassistant_states: true
+  homeassistant_services: true
+  custom_services: true
 
 ota:
   - platform: esphome
