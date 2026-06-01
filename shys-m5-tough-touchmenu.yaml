@@ -14,16 +14,9 @@ esphome:
     version: "1.0"
     
   platformio_options:
-    board: esp32dev
-    framework: arduino
-
     lib_deps:
-      - WiFi
-      - SPI
-      - FS
-      - Wire
-      - EEPROM
-      - m5stack/M5Unified @ 0.0.7
+      - m5stack/M5Unified@0.2.14
+      - m5stack/M5GFX@0.2.20
 
   on_boot:
     priority: 0
@@ -48,6 +41,12 @@ dashboard_import:
 
 esp32:
   board: esp32dev
+  framework:
+    type: arduino
+    advanced:
+      include_builtin_idf_components:
+        - driver
+        - esp_lcd
 
 logger:
   level: DEBUG

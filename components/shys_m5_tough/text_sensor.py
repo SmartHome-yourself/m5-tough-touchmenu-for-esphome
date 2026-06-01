@@ -3,6 +3,16 @@ import esphome.config_validation as cv
 # import voluptuous as vol
 from esphome.components import text_sensor
 from esphome.const import CONF_ID, CONF_NAME
+from esphome.core import CORE
+
+try:
+    from esphome.components.esp32 import include_builtin_idf_component
+
+    # M5GFX: Bus_Parallel8 → driver/i2s.h; Bus_EPD → esp_lcd (excluded by default in ESPHome 2026.2+)
+    include_builtin_idf_component("driver")
+    include_builtin_idf_component("esp_lcd")
+except ImportError:
+    pass
 
 # POSSIBLE VALUES
 VALUE_BUTTON_TYPES = {
@@ -43,7 +53,13 @@ empty_text_sensor_ns = cg.esphome_ns.namespace(
 ShysM5Tough = empty_text_sensor_ns.class_(
     'ShysM5Tough', text_sensor.TextSensor, cg.Component)
 
-CONFIG_SCHEMA = text_sensor.TEXT_SENSOR_SCHEMA.extend({
+# ESPHome >= 2026.1: TEXT_SENSOR_SCHEMA → text_sensor_schema()
+if hasattr(text_sensor, "text_sensor_schema"):
+    _TEXT_SENSOR_BASE_SCHEMA = text_sensor.text_sensor_schema(ShysM5Tough)
+else:
+    _TEXT_SENSOR_BASE_SCHEMA = text_sensor.TEXT_SENSOR_SCHEMA
+
+CONFIG_SCHEMA = _TEXT_SENSOR_BASE_SCHEMA.extend({
     cv.GenerateID(): cv.declare_id(ShysM5Tough),
     cv.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
     cv.Optional(CONF_INIT_SOUND, default=DEFAULT_INIT_SOUND): cv.boolean,
@@ -63,14 +79,22 @@ CONFIG_SCHEMA = text_sensor.TEXT_SENSOR_SCHEMA.extend({
 }).extend(cv.COMPONENT_SCHEMA)
 
 
-def to_code(config):
-    var = cg.new_Pvariable(config[CONF_ID])
-    yield text_sensor.register_text_sensor(var, config)
-    yield cg.register_component(var, config)
+async def to_code(config):
+    try:
+        from esphome.components.esp32 import include_builtin_idf_component
 
-    if CONF_NAME in config:
-        confInitSound = config[CONF_NAME]
-        cg.add(var.set_init_sound_enabled(confInitSound))
+        include_builtin_idf_component("driver")
+        include_builtin_idf_component("esp_lcd")
+    except ImportError:
+        pass
+
+    # Passwort-Persistenz in shys_m5_tough.h via EEPROM.h (selective Arduino compilation ab 2026.2)
+    if CORE.is_esp32 and CORE.using_arduino:
+        cg.add_library("EEPROM", None)
+
+    var = cg.new_Pvariable(config[CONF_ID])
+    await text_sensor.register_text_sensor(var, config)
+    await cg.register_component(var, config)
 
     if CONF_INIT_SOUND in config:
         confInitSound = config[CONF_INIT_SOUND]
